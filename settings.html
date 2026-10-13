@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings · Lost & Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar"></aside>
+
+    <main>
+        <header class="page-head">
+            <div class="page-head-text">
+                <h2>Settings</h2>
+                <p>Make the sky feel like yours.</p>
+            </div>
+            <div class="header-icons">
+                <span class="date"></span>
+                <button type="button" class="sidebar-open-btn" aria-label="Show menu">☰</button>
+                <button type="button" class="theme-toggle" aria-label="Switch light or dark">❇</button>
+            </div>
+        </header>
+        <div class="page-body settings-body">
+            <section class="task-list settings-card">
+                <h4>Your name</h4>
+                <form class="add-task-form" id="name-form">
+                    <input type="text" class="task-input" id="name-input" maxlength="30" aria-label="Display name" required>
+                    <button type="submit" class="add-task-btn">Save name</button>
+                </form>
+                <p class="group-note" id="account-email"></p>
+            </section>
+            <section class="task-list settings-card">
+                <h4>Appearance</h4>
+                <button type="button" class="add-task-btn" id="theme-switch"></button>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

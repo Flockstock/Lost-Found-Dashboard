@@ -1,0 +1,18 @@
+# secrets and local config
+.env
+.env.*
+!.env.example
+*.pem
+
+# dependencies and build output
+node_modules/
+dist/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log

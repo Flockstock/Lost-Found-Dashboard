@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Radar · Lost & Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar"></aside>
+
+    <main>
+        <header class="page-head">
+            <div class="page-head-text">
+                <h2>Student Radar</h2>
+                <p>Stay updated. Stay ahead. Keep the links you want close.</p>
+            </div>
+            <div class="header-icons">
+                <span class="date"></span>
+                <button type="button" class="sidebar-open-btn" aria-label="Show menu">☰</button>
+                <button type="button" class="theme-toggle" aria-label="Switch light or dark">❇</button>
+            </div>
+        </header>
+
+        <div class="board">
+            <section class="task-list">
+                <h4>Save a link</h4>
+                <form class="add-task-form" id="radar-form">
+                    <input type="text" inputmode="url" class="task-input" id="radar-url" placeholder="Paste a link, e.g. devpost.com" aria-label="Link" maxlength="2048" autocomplete="off" required>
+                    <input type="text" class="task-input" id="radar-title" placeholder="Name (optional)" aria-label="Name" maxlength="120">
+                    <textarea class="task-description" id="radar-note" placeholder="Why does it matter? (optional)" aria-label="Note" maxlength="280"></textarea>
+                    <button type="submit" class="add-task-btn">Save to radar</button>
+                </form>
+            </section>
+
+            <div class="board-lists">
+                <section class="task-group">
+                    <h4>Your radar</h4>
+                    <ul class="tasks" id="radar-list"></ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/radar.js"></script>
+</body>
+</html>

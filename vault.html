@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curiosity Vault · Lost & Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar"></aside>
+
+    <main>
+        <header class="page-head">
+            <div class="page-head-text">
+                <h2>Curiosity Vault</h2>
+                <p class="page-summary">Everything you chose to learn or create.</p>
+            </div>
+            <div class="header-icons">
+                <span class="date"></span>
+                <button type="button" class="sidebar-open-btn" aria-label="Show menu">☰</button>
+                <button type="button" class="theme-toggle" aria-label="Switch light or dark">❇</button>
+            </div>
+        </header>
+        <div class="page-body">
+            <section class="vault-group"><h4>Still curious</h4><div class="archive-list" id="vault-open"></div></section>
+            <section class="vault-group"><h4>Uncovered</h4><div class="archive-list" id="vault-done"></div></section>
+            <a href="missions.html" class="explore-link">Add something to explore →</a>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/vault.js"></script>
+</body>
+</html>

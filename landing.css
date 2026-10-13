@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --bg-main:  #050E26;  /* deep navy background*/
+    --bg-card: #10043e;  /* slightly lighter card bg*/
+    --accent-purple :#3300ff;
+    --accent-blue: #4f8dfd;
+    --text-primary: #ffffff;
+    --text-muted: #9aa3b8;
+    --border-subtle : rgba(255,255,255, 0.08);
+}
+.hero{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: min(420px, 100%);
+}
+
+body{
+    background-color: var(--bg-main);
+    background-image: url('assets/background/mainbg.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-primary);
+}
+.auth-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: rgba(66, 0, 166, 0.08);
+    backdrop-filter: blur(6px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--text-muted);
+}
+.form-title{
+    display: flex;
+    justify-content: center;
+}
+.auth-form label{
+    font-size: 15px;
+}
+.auth-form input{
+    background-color: var(--accent-blue);
+    color: #050E26;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 12px;
+    display: block;
+    width: 100%;
+    font: inherit;
+}
+.get-started-btn{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    width: 200px;
+    max-width: 100%;
+    align-self: center;
+    color: var(--text-primary);
+    background-color: var(--accent-purple);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.get-started-btn:disabled{
+    opacity: .6;
+    cursor: wait;
+}
+.hidden{
+    display: none;
+}
+.resend-btn , .confirmed-btn {
+    background-color: var(--accent-purple);
+    color: var(--text-primary);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.confirm-notice{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.confirm-notice p{
+    width: 100%;
+}
+.form-message{
+    min-height: 1.2em;
+    font-size: 14px;
+    color: #ffb4c0;
+}
+.toggle-text{
+    text-align: center;
+    font-size: 14px;
+}
+.toggle-link{
+    color: var(--accent-blue);
+}
+:focus-visible{
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}

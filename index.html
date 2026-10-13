@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found</title>
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+    <section class="hero">
+        <h1>✨ Lost & Found </h1>
+        <p>Become the main character. Every star is a proof you showed up.</p>
+
+        <form class="auth-form">
+            <h2 class="form-title">Login</h2>
+
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" autocomplete="email" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" autocomplete="current-password" minlength="6" required>
+
+            <div class="confirm-password-group hidden">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" autocomplete="new-password" minlength="6">
+            </div>
+
+            <p class="form-message" role="alert"></p>
+
+            <div class="confirm-notice hidden">
+                <p>Check your email to confirm your account.</p>
+                <button type="button" class="resend-btn">Resend Email</button>
+                <button type="button" class="confirmed-btn">I've Confirmed</button>
+            </div>
+
+            <button type="submit" class="get-started-btn">Login</button>
+
+            <p class="toggle-text">
+                <span class="toggle-message">Don't have an account?</span>
+                <a href="#" class="toggle-link">Sign Up</a>
+            </p>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabaseClient.js"></script>
+    <script src="landing.js"></script>
+</body>
+</html>
