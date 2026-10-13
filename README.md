@@ -2,7 +2,11 @@
 ![Lost & Found Dashboard](screenshots/banner.jpg)
 
 *A personal dashboard for finding your rhythm, one small accomplishment at a time.*
+# Lost & Found
 
+🌐 **[Live Demo](https://flockstock.github.io/Lost-Found-Dashboard/)**
+
+A personal dashboard for organising tasks, learning, career goals, and creative projects.
 Lost & Found began with a simple idea: **what if the things we accomplish every day could become something we could actually see?**
 
 It's easy to move through a day, finish a few things, and still feel like we haven't made much progress. Lost & Found turns those small efforts into something tangible. Every completed task becomes a star. Over time, those stars build streaks, reveal patterns in what you do, and gradually fill your own little observatory.
