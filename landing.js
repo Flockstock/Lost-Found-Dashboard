@@ -1,9 +1,9 @@
-// ===== LANDING: login and sign up =====
 
 const authForm = document.querySelector('.auth-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const confirmInput = document.getElementById('confirm-password');
+
 const confirmGroup = document.querySelector('.confirm-password-group');
 const confirmNotice = document.querySelector('.confirm-notice');
 const formTitle = document.querySelector('.form-title');
@@ -12,86 +12,158 @@ const submitBtn = document.querySelector('.get-started-btn');
 const toggleMessage = document.querySelector('.toggle-message');
 const toggleLink = document.querySelector('.toggle-link');
 const resendBtn = document.querySelector('.resend-btn');
-const confirmedBtn = document.querySelector('.confirmed-btn');
 
 let isSignUp = false;
 
-// Already logged in? Skip straight to the dashboard.
-supabaseClient.auth.getSession().then(function (result) {
-    if (result.data.session) window.location.replace('dashboard.html');
-});
+function showMessage(message) {
+    formMessage.textContent = message;
+}
 
 function goToDashboard() {
-    window.location.href = 'dashboard.html';
+    window.location.replace('dashboard.html');
 }
 
-function showMessage(text) {
-    formMessage.textContent = text;
-}
+// Redirect users who are already logged in.
+supabaseClient.auth.getSession()
+    .then(({ data, error }) => {
+        if (error) throw error;
+        if (data.session) goToDashboard();
+    })
+    .catch(() => {
+        showMessage('Unable to check your login. Please refresh and try again.');
+    });
 
+// Switch between Login and Sign Up.
 function setMode(signUp) {
     isSignUp = signUp;
+
     confirmGroup.classList.toggle('hidden', !signUp);
     confirmInput.required = signUp;
+
     confirmNotice.classList.add('hidden');
     showMessage('');
 
-    formTitle.textContent = signUp ? 'Sign Up' : 'Login';
-    submitBtn.textContent = signUp ? 'Sign Up' : 'Login';
-    toggleMessage.textContent = signUp ? 'Already have an account?' : 'Don\'t have an account?';
-    toggleLink.textContent = signUp ? 'Login' : 'Sign Up';
-    passwordInput.autocomplete = signUp ? 'new-password' : 'current-password';
+    formTitle.textContent = signUp
+        ? 'Create your account'
+        : 'Welcome back';
+
+    submitBtn.textContent = signUp
+        ? 'Create Account'
+        : 'Login';
+
+    toggleMessage.textContent = signUp
+        ? 'Already have an account?'
+        : 'New here?';
+
+    toggleLink.textContent = signUp
+        ? 'Login'
+        : 'Create an account';
+
+    passwordInput.autocomplete = signUp
+        ? 'new-password'
+        : 'current-password';
+
+    confirmInput.value = '';
 }
 
-toggleLink.addEventListener('click', function (event) {
+toggleLink.addEventListener('click', (event) => {
     event.preventDefault();
     setMode(!isSignUp);
 });
 
-authForm.addEventListener('submit', async function (event) {
+// Handle Login and Sign Up.
+authForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     showMessage('');
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+
+    if (isSignUp && password !== confirmInput.value) {
+        showMessage('Your passwords do not match.');
+        return;
+    }
+
     submitBtn.disabled = true;
 
-    if (isSignUp) {
-        if (password !== confirmInput.value) {
-            showMessage('The passwords do not match.');
-            submitBtn.disabled = false;
+    try {
+        if (isSignUp) {
+            const { data, error } =
+                await supabaseClient.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            display_name: email.split('@')[0]
+                        }
+                    }
+                });
+
+            if (error) throw error;
+
+            if (data.session) {
+                goToDashboard();
+                return;
+            }
+
+            confirmNotice.classList.remove('hidden');
+            showMessage(
+                'Account created! Check your email to confirm your account.'
+            );
+        } else {
+            const { error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if (error) throw error;
+
+            goToDashboard();
             return;
         }
-        const { data, error } = await supabaseClient.auth.signUp({
-            email: email,
-            password: password,
-            options: { data: { display_name: email.split('@')[0] } }
-        });
-        if (error) showMessage(error.message);
-        else if (data.session) goToDashboard();          // email confirmation is off
-        else confirmNotice.classList.remove('hidden');   // waiting for the confirmation email
-    } else {
-        const { error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
-        if (error) {
-            showMessage(error.message);
-            if (/confirm/i.test(error.message)) confirmNotice.classList.remove('hidden');
+    } catch (error) {
+        if (/confirm/i.test(error.message)) {
+            confirmNotice.classList.remove('hidden');
+            showMessage(
+                'Please confirm your email before logging in.'
+            );
+        } else if (
+            /invalid login credentials/i.test(error.message)
+        ) {
+            showMessage('Incorrect email or password.');
         } else {
-            goToDashboard();
+            showMessage(error.message || 'Something went wrong. Try again.');
         }
+    } finally {
+        submitBtn.disabled = false;
     }
-    submitBtn.disabled = false;
 });
 
-resendBtn.addEventListener('click', async function () {
-    const { error } = await supabaseClient.auth.resend({ type: 'signup', email: emailInput.value.trim() });
-    showMessage(error ? error.message : 'Confirmation email sent again.');
-});
+// Resend the confirmation email.
+resendBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
 
-confirmedBtn.addEventListener('click', async function () {
-    const { error } = await supabaseClient.auth.signInWithPassword({
-        email: emailInput.value.trim(),
-        password: passwordInput.value
-    });
-    if (error) showMessage('Not confirmed yet. Check your inbox.');
-    else goToDashboard();
+    if (!email) {
+        showMessage('Enter your email address first.');
+        return;
+    }
+
+    resendBtn.disabled = true;
+    showMessage('');
+
+    try {
+        const { error } = await supabaseClient.auth.resend({
+            type: 'signup',
+            email
+        });
+
+        if (error) throw error;
+
+        showMessage('If eligible, a confirmation email has been sent.');
+    } catch (error) {
+        showMessage(error.message || 'Unable to resend the email.');
+    } finally {
+        resendBtn.disabled = false;
+    }
 });

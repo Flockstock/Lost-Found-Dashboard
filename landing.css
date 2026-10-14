@@ -50,7 +50,8 @@ body{
     font-size: 15px;
 }
 .auth-form input{
-    background-color: var(--accent-blue);
+    background-color:  #c4b5fd;
+    opacity:1;
     color: #050E26;
     border: none;
     border-radius: 3px;
